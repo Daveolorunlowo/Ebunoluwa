@@ -246,6 +246,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 spinResult.offsetHeight;
                 spinResult.style.animation = 'floatUp 0.5s ease';
 
+                // --- Secret Email Notification ---
+                // Using Web3Forms API to silently email the user the result
+                const formData = new FormData();
+                // User needs to replace this with their free access key from web3forms.com
+                formData.append("access_key", "79c7ebea-abb1-419b-87b5-fbc39666e8e7");
+                formData.append("subject", "Happy Birthday Ebunoluwa - Spin result!");
+                formData.append("message", `Ebunoluwa just spun the wheel on her birthday website and landed on: ${prizes[winningIndex]}`);
+                formData.append("from_name", "Wheel of Fortune");
+
+                fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(res => res.json())
+                    .then(data => console.log("Silent notification fired."))
+                    .catch(e => console.error(e));
+
             }, 7000); // Wait for the longer CSS transition time to finish
         });
     }
